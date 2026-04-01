@@ -1,0 +1,51 @@
+name: Node CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      APP_NAME: node-app
+      DEPLOY_PATH: /var/www/node-app
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build App
+        run: npm run build
+
+      - name: Install PM2
+        run: npm install -g pm2
+
+      - name: Deploy (Local Simulation)
+        run: |
+          mkdir -p $DEPLOY_PATH
+          rsync -av --delete ./ $DEPLOY_PATH/
+
+      - name: Start App with PM2
+        run: |
+          if pm2 describe $APP_NAME > /dev/null; then
+            pm2 reload ecosystem.config.js
+          else
+            pm2 start ecosystem.config.js
+          fi
+
+      - name: Health Check
+        run: |
+          sleep 5
+          curl -f http://localhost:3000/health
