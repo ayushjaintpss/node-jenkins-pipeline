@@ -11,7 +11,7 @@ jobs:
 
     env:
       APP_NAME: node-app
-      DEPLOY_PATH: /var/www/node-app
+      DEPLOY_PATH: /home/anish/node-app
 
     steps:
 
