@@ -60,7 +60,7 @@ curl http://localhost:3000/version
 ```bash
 pm2 delete all
 pm2 start ecosystem.config.js
-
+```
 Verify the app runs locally first
 
 
