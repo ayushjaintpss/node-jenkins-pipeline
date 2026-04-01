@@ -49,17 +49,18 @@ Jenkins (if using Jenkins CI/CD)
 GitHub Actions (if using workflow)
 Application exposes /health and /version endpoints
 Troubleshooting
-Old version displayed at /version:
-Ensure PM2 reloads the latest dist files
-Delete old instances: pm2 delete all
-Restart: pm2 start ecosystem.config.js
-Permission issues on GitHub Actions:
-Use a writable directory (e.g., $HOME/node-app) instead of /var/www
+
+Old version displayed at /version: Ensure PM2 reloads the latest dist files
+
+pm2 delete all
+pm2 start ecosystem.config.js
+Permission issues on GitHub Actions: Use a writable directory (e.g., $HOME/node-app) instead of /var/www
 Ensure the runner user has write access
-PM2 cluster fails to start:
-Check logs: pm2 logs
+
+PM2 cluster fails to start: Check logs
+
+pm2 logs
+
 Verify the app runs locally first
-
-
 
 
