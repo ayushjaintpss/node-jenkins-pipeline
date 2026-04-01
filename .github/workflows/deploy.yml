@@ -7,11 +7,11 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: self-hosted
+    runs-on: self-hosted   # Keep this if you want your own machine runner
 
     env:
       APP_NAME: node-app
-      DEPLOY_PATH: ${{ github.workspace }}/deploy
+      DEPLOY_PATH: ${{ github.workspace }}/deploy   # Deploy inside workspace
 
     steps:
 
@@ -24,7 +24,7 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-         run: npm install
+        run: npm ci
 
       - name: Build App
         run: npm run build
@@ -32,13 +32,14 @@ jobs:
       - name: Install PM2
         run: npm install -g pm2
 
-      - name: Deploy (Local Simulation)
+      - name: Deploy
         run: |
           mkdir -p $DEPLOY_PATH
           rsync -av --delete ./ $DEPLOY_PATH/
 
       - name: Start App with PM2
         run: |
+          cd $DEPLOY_PATH
           if pm2 describe $APP_NAME > /dev/null; then
             pm2 reload ecosystem.config.js
           else
@@ -48,4 +49,4 @@ jobs:
       - name: Health Check
         run: |
           sleep 5
-          curl -f http://localhost:3000/health
+          curl -f http://localhost:3000/version
