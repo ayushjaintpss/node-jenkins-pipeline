@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     env:
       APP_NAME: node-app
@@ -24,7 +24,7 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm ci
+         run: npm install
 
       - name: Build App
         run: npm run build
