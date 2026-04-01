@@ -11,7 +11,7 @@ jobs:
 
     env:
       APP_NAME: node-app
-        DEPLOY_PATH: $HOME/node-app
+      DEPLOY_PATH: ${{ github.workspace }}/deploy
 
     steps:
 
