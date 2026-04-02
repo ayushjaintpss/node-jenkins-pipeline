@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: self-hosted   # or "ubuntu-latest" for GitHub runners
+    runs-on: ubuntu-latest   # or "ubuntu-latest" for GitHub runners
 
     env:
       APP_NAME: node-app
